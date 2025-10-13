@@ -6,46 +6,49 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+  <link rel="stylesheet" href="css/flight-results.css">
 </head>
 <body>
   <section class="home">
     <h1>Welcome to MicaX Airlines ✈️</h1>
-    <p #tagline>"MicaX — Experience the Sky Differently."</p>
+    <p id=tagline>"MicaX — Experience the Sky Differently."</p>
     <p>Book your next flight with ease and comfort.</p>
     <button id="openBooking">Book A Flight</button>
   </section>
     <div id="bookingModal" class="modal">
-    <div class="modal-content">
-      <span id="closeModal" class="close">&times;</span>
-      <h2>Book A Flight</h2>
-      <form id="bookingForm">
-        <label>From:</label>
-        <input type="text" id="from" required>
+      <div class="modal-content">
+        <span id="closeModal" class="close">&times;</span>
+        <h2>Book A Flight</h2>
+        <form id="bookingForm">
+          <label>From:</label>
+          <input type="text" id="from" required>
 
-        <label>To:</label>
-        <input type="text" id="to" required>
+          <label>To:</label>
+          <input type="text" id="to" required>
 
-        <label>Type:</label>
-        <select id="flightType" onchange="toggleReturnDate()">
-          <option value="oneway">One Way</option>
-          <option value="roundtrip">Round Trip</option>
-        </select>
+          <label>Type:</label>
+          <select id="flightType" onchange="toggleReturnDate()">
+            <option value="oneway">One Way</option>
+            <option value="roundtrip">Round Trip</option>
+          </select>
 
-        <label>Depart Date:</label>
-        <input type="date" id="departDate" required>
+          <label>Depart Date:</label>
+          <input type="date" id="departDate" required>
 
-        <div id="returnContainer" style="display:none;">
-          <label>Return Date:</label>
-          <input type="date" id="returnDate">
-        </div>
+          <div id="returnContainer" style="display:none;">
+            <label>Return Date:</label>
+            <input type="date" id="returnDate">
+          </div>
 
-        <label>Passengers:</label>
-        <input type="number" id="passengers" min="1" value="1">
+          <label>Passengers:</label>
+          <input type="number" id="passengers" min="1" value="1">
 
-        <button type="submit">Search Flight</button>
-      </form>
+          <button type="submit">Search Flight</button>
+        </form>
+      </div>
     </div>
-  </div>
+   
     <script src="js/booking.js"></script>
+    <script src="js/flight.js"></script>
 </body>
 </html>

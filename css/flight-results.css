@@ -1,0 +1,101 @@
+.results-modal { z-index: 11; }
+
+.results-content { 
+  background-color: #F8F8FF; 
+  color: #2F2F2F; 
+  margin: 5% auto; 
+  padding: 25px; 
+  border-radius: 12px; 
+  width: 90%; 
+  max-width: 600px; 
+  text-align: center; 
+  position: relative; 
+  box-shadow: 0 6px 18px rgba(0,0,0,0.3); 
+  border-top: 5px solid #191970; 
+  max-height: 80vh; 
+  overflow-y: auto; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+}
+
+.flight-list { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 15px; 
+  width: 100%; 
+  align-items: center; 
+}
+
+.flight-card { 
+  background: #F8F8FF; 
+  border: 2px solid #87CEEB; 
+  border-radius: 8px; 
+  padding: 15px; 
+  margin-bottom: 10px; 
+  text-align: center; 
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+  width: 100%; 
+  max-width: 500px; 
+}
+
+.flight-card h3 { 
+  color: #191970; 
+  margin: 0 0 10px 0; 
+  font-size: 18px; 
+}
+
+.flight-card p { 
+  margin: 5px 0; 
+  color: #2F2F2F; 
+  text-align: center; 
+}
+
+.flight-card button.select-btn { 
+  background-color: #87CEEB; 
+  color: #191970; 
+  border: none; 
+  padding: 10px 15px; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  font-weight: 600; 
+  transition: 0.3s; 
+  margin-top: 10px; 
+  width: 100%; 
+}
+
+.flight-card button.select-btn:hover { 
+  background-color: #6A5ACD; 
+  color: #F8F8FF; 
+  transform: translateY(-1px); 
+}
+
+@media (max-width: 768px) { 
+  .results-content { 
+    margin: 2% auto; 
+    padding: 15px; 
+    width: 95%; 
+    max-height: 85vh; 
+  } 
+  .flight-card { 
+    padding: 12px; 
+    border-width: 1.5px; 
+  } 
+  .flight-card h3 { 
+    font-size: 16px; 
+  } 
+  .flight-card button.select-btn { 
+    padding: 12px; 
+    font-size: 16px; 
+  } 
+}
+
+@media (min-width: 769px) and (max-width: 1024px) { 
+  .results-content { 
+    max-width: 700px; 
+    padding: 30px; 
+  } 
+  .flight-card { 
+    max-width: 600px; 
+  } 
+}

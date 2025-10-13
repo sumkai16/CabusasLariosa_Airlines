@@ -12,14 +12,29 @@ button:hover { background-color: #6A5ACD; color: #F8F8FF; transform: scale(1.05)
 .modal-content { background-color: #F8F8FF; color: #2F2F2F; margin: 10% auto; padding: 25px; border-radius: 12px; width: 90%; max-width: 400px; text-align: left; position: relative; box-shadow: 0 6px 18px rgba(0,0,0,0.3); border-top: 5px solid #191970; transform: translateY(-30px); opacity: 0; animation: slideDown 0.4s ease forwards; }
 .modal.hide .modal-content { animation: slideUp 0.3s ease forwards; }
 
+
 .close { position: absolute; right: 15px; top: 10px; font-size: 26px; color: #2F2F2F; cursor: pointer; transition: 0.3s; }
 .close:hover { color: #DC143C; transform: scale(1.1); }
 
-form { display: flex; flex-direction: column; gap: 10px; }
-input, select { padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 14px; outline: none; transition: 0.2s; }
-input:focus, select:focus { border-color: #87CEEB; box-shadow: 0 0 5px rgba(135,206,235,0.6); }
+.modal-content form { display: flex; flex-direction: column; gap: 15px; margin-top: 10px; }
+
+.modal-content label { font-weight: 600; color: #191970; margin-bottom: 5px; text-align: left; font-size: 14px; }
+
+.modal-content input, .modal-content select { padding: 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 16px; outline: none; transition: 0.3s ease; background-color: #F8F8FF; color: #2F2F2F; width: 100%; box-sizing: border-box; }
+
+.modal-content input:focus, .modal-content select:focus { border-color: #87CEEB; box-shadow: 0 0 8px rgba(135,206,235,0.5); transform: scale(1.02); }
+
+.modal-content input[type="date"]::-webkit-calendar-picker-indicator { cursor: pointer; opacity: 0.7; }
+
+.modal-content button[type="submit"] { background-color: #87CEEB; color: #191970; font-weight: 600; padding: 12px; border-radius: 8px; border: none; cursor: pointer; transition: 0.3s ease; font-size: 16px; margin-top: 10px; }
+
+.modal-content button[type="submit"]:hover { background-color: #6A5ACD; color: #F8F8FF; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(106,90,205,0.4); }
+
+#returnContainer { display: flex; flex-direction: column; gap: 5px; margin-top: 5px; }
 
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
 @keyframes slideDown { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-@keyframes slideUp { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-30px); opacity: 0; } }
+
+@media (max-width: 768px) { .modal-content { margin: 5% auto; padding: 20px; width: 95%; max-width: none; border-radius: 8px; } .modal-content form { gap: 12px; } .modal-content label { font-size: 16px; } .modal-content input, .modal-content select { padding: 15px; font-size: 16px; } .modal-content button[type="submit"] { padding: 15px; font-size: 18px; } #returnContainer { margin-top: 8px; gap: 8px; } }
+@media (min-width: 769px) and (max-width: 1024px) { .modal-content { max-width: 500px; padding: 30px; } .modal-content form { gap: 18px; } .modal-content input, .modal-content select { padding: 14px; } }
