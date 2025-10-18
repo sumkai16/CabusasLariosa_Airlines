@@ -30,16 +30,14 @@
           <label>Type:</label>
           <select id="flightType" onchange="toggleReturnDate()">
             <option value="oneway">One Way</option>
-            <option value="roundtrip">Round Trip</option>
+            <option value="roundtrip" selected>Round Trip</option>
           </select>
 
           <label>Depart Date:</label>
           <input type="date" id="departDate" required>
 
-          <div id="returnContainer" style="display:none;">
-            <label>Return Date:</label>
-            <input type="date" id="returnDate">
-          </div>
+          <label for="returnDate">Return Date:</label>
+          <input type="date" id="returnDate" required>
 
           <label>Passengers:</label>
           <input type="number" id="passengers" min="1" value="1">

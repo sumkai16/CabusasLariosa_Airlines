@@ -1,26 +1,33 @@
-let openBtn = document.querySelector("#openBooking");
-let modal = document.querySelector("#bookingModal");
-let closeBtn = document.querySelector(".close");
+const openBookingButton = document.querySelector("#openBooking");
+const bookingModal = document.querySelector("#bookingModal");
+const closeBookingButton = document.querySelector(".close");
 
-openBtn.addEventListener("click", () => {
-    modal.classList.add("show");
-    modal.classList.remove("hide");
+openBookingButton.addEventListener("click", function() {
+    bookingModal.classList.add("show");
+    bookingModal.classList.remove("hide");
 });
-closeBtn.addEventListener("click", () => {
-    modal.classList.add("hide");
-    modal.classList.remove("show");
-  
+
+closeBookingButton.addEventListener("click", function() {
+    bookingModal.classList.add("hide");
+    bookingModal.classList.remove("show");
 });
+
 function toggleReturnDate() {
-  const flightType = document.getElementById('flightType').value;
-  const returnContainer = document.getElementById('returnContainer');
-  const returnDateInput = document.getElementById('returnDate');
+    const selectedFlightType = document.getElementById('flightType').value;
+    const returnDateLabel = document.querySelector('label[for="returnDate"]');
+    const returnDateInput = document.getElementById('returnDate');
 
-  if (flightType === 'roundtrip') {
-    returnContainer.style.display = 'block';
-    returnDateInput.required = true;
-  } else {
-    returnContainer.style.display = 'none';
-    returnDateInput.required = false;
-  }
+    if (selectedFlightType === 'oneway') {
+        returnDateInput.required = false;
+        returnDateLabel.style.display = 'none';
+        returnDateInput.style.display = 'none';
+    } else {
+        returnDateInput.required = true;
+        returnDateLabel.style.display = 'block';
+        returnDateInput.style.display = 'block';
+    }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    toggleReturnDate();
+});
