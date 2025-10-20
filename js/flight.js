@@ -1,217 +1,25 @@
 let bookingData = {};
 let selectedFlight = null;
 const oneWayTemplates = [
-    { 
-        flightNo: "5J 560", 
-        from: "Manila", 
-        to: "Cebu", 
-        time: "08:00 AM", 
-        basePrice: 3500, 
-        seats: 20, 
-        hours: 1.5, 
-        fareType: "Promo Fare", 
-        terminal: "Terminal A", 
-        departDate: "2025-12-15" 
-    },
-    { 
-        flightNo: "PR 221", 
-        from: "Cebu", 
-        to: "Davao", 
-        time: "10:30 AM", 
-        basePrice: 4200, 
-        seats: 15, 
-        hours: 2, 
-        fareType: "Regular", 
-        terminal: "Terminal B", 
-        departDate: "2025-12-16" 
-    },
-    { 
-        flightNo: "Z2 103", 
-        from: "Manila", 
-        to: "Japan", 
-        time: "01:00 PM", 
-        basePrice: 28000, 
-        seats: 10, 
-        hours: 4, 
-        fareType: "Promo Fare", 
-        terminal: "Terminal A", 
-        departDate: "2025-12-17" 
-    },
-    { 
-        flightNo: "5J 562", 
-        from: "Davao", 
-        to: "Singapore", 
-        time: "09:15 AM", 
-        basePrice: 32000, 
-        seats: 18, 
-        hours: 3.5, 
-        fareType: "Regular", 
-        terminal: "Terminal B", 
-        departDate: "2025-12-18" 
-    },
-    { 
-        flightNo: "PR 222", 
-        from: "Cebu", 
-        to: "Boracay", 
-        time: "11:45 AM", 
-        basePrice: 4500, 
-        seats: 12, 
-        hours: 1.75, 
-        fareType: "Promo Fare", 
-        terminal: "Terminal A", 
-        departDate: "2025-12-19" 
-    },
-    { 
-        flightNo: "Z2 105", 
-        from: "Manila", 
-        to: "Palawan", 
-        time: "02:30 PM", 
-        basePrice: 5500, 
-        seats: 8, 
-        hours: 2.5, 
-        fareType: "Regular", 
-        terminal: "Terminal B", 
-        departDate: "2025-12-20" 
-    },
-    { 
-        flightNo: "5J 570", 
-        from: "Manila", 
-        to: "Cebu", 
-        time: "06:30 AM", 
-        basePrice: 3200, 
-        seats: 30, 
-        hours: 1.5, 
-        fareType: "Regular", 
-        terminal: "Terminal A", 
-        departDate: "2025-12-21" 
-    },
-    { 
-        flightNo: "PR 226", 
-        from: "Cebu", 
-        to: "Davao", 
-        time: "02:00 PM", 
-        basePrice: 3800, 
-        seats: 25, 
-        hours: 2, 
-        fareType: "Promo Fare", 
-        terminal: "Terminal B", 
-        departDate: "2025-12-22" 
-    }
+    { flightNo: "5J 560", from: "Manila", to: "Cebu", time: "08:00 AM", basePrice: 3500, seats: 20, hours: 1.5, fareType: "Promo Fare", terminal: "Terminal A", departDate: "2025-12-15" },
+    { flightNo: "PR 221", from: "Cebu", to: "Davao", time: "10:30 AM", basePrice: 4200, seats: 15, hours: 2, fareType: "Regular", terminal: "Terminal B", departDate: "2025-12-16" },
+    { flightNo: "Z2 103", from: "Manila", to: "Japan", time: "01:00 PM", basePrice: 28000, seats: 10, hours: 4, fareType: "Promo Fare", terminal: "Terminal A", departDate: "2025-12-17" },
+    { flightNo: "5J 562", from: "Davao", to: "Singapore", time: "09:15 AM", basePrice: 32000, seats: 18, hours: 3.5, fareType: "Regular", terminal: "Terminal B", departDate: "2025-12-18" },
+    { flightNo: "PR 222", from: "Cebu", to: "Boracay", time: "11:45 AM", basePrice: 4500, seats: 12, hours: 1.75, fareType: "Promo Fare", terminal: "Terminal A", departDate: "2025-12-19" },
+    { flightNo: "Z2 105", from: "Manila", to: "Palawan", time: "02:30 PM", basePrice: 5500, seats: 8, hours: 2.5, fareType: "Regular", terminal: "Terminal B", departDate: "2025-12-20" },
+    { flightNo: "5J 570", from: "Manila", to: "Cebu", time: "06:30 AM", basePrice: 3200, seats: 30, hours: 1.5, fareType: "Regular", terminal: "Terminal A", departDate: "2025-12-21" },
+    { flightNo: "PR 226", from: "Cebu", to: "Davao", time: "02:00 PM", basePrice: 3800, seats: 25, hours: 2, fareType: "Promo Fare", terminal: "Terminal B", departDate: "2025-12-22" }
 ];
 
 const roundTripTemplates = [
-    { 
-        flightNo: "5J 561", 
-        from: "Manila", 
-        to: "Cebu", 
-        depart: "07:00 AM", 
-        return: "05:00 PM", 
-        basePrice: 6000, 
-        seats: 25, 
-        hours: 1.5, 
-        fareType: "Regular", 
-        terminal: "Terminal A", 
-        departDate: "2025-12-15", 
-        returnDate: "2025-12-22" 
-    },
-    { 
-        flightNo: "PR 300", 
-        from: "Cebu", 
-        to: "Davao", 
-        depart: "09:00 AM", 
-        return: "06:30 PM", 
-        basePrice: 7500, 
-        seats: 18, 
-        hours: 2, 
-        fareType: "Promo Fare", 
-        terminal: "Terminal B", 
-        departDate: "2025-12-16", 
-        returnDate: "2025-12-23" 
-    },
-    { 
-        flightNo: "Z2 104", 
-        from: "Manila", 
-        to: "Japan", 
-        depart: "11:00 AM", 
-        return: "07:00 PM", 
-        basePrice: 58000, 
-        seats: 12, 
-        hours: 4, 
-        fareType: "Regular", 
-        terminal: "Terminal A", 
-        departDate: "2025-12-17", 
-        returnDate: "2025-12-24" 
-    },
-    { 
-        flightNo: "5J 566", 
-        from: "Davao", 
-        to: "Singapore", 
-        depart: "08:30 AM", 
-        return: "04:30 PM", 
-        basePrice: 64000, 
-        seats: 20, 
-        hours: 3.5, 
-        fareType: "Promo Fare", 
-        terminal: "Terminal B", 
-        departDate: "2025-12-18", 
-        returnDate: "2025-12-25" 
-    },
-    { 
-        flightNo: "PR 301", 
-        from: "Cebu", 
-        to: "Boracay", 
-        depart: "10:15 AM", 
-        return: "06:15 PM", 
-        basePrice: 8800, 
-        seats: 15, 
-        hours: 1.75, 
-        fareType: "Regular", 
-        terminal: "Terminal A", 
-        departDate: "2025-12-19", 
-        returnDate: "2025-12-26" 
-    },
-    { 
-        flightNo: "Z2 109", 
-        from: "Manila", 
-        to: "Palawan", 
-        depart: "01:00 PM", 
-        return: "08:00 PM", 
-        basePrice: 10500, 
-        seats: 10, 
-        hours: 2.5, 
-        fareType: "Promo Fare", 
-        terminal: "Terminal B", 
-        departDate: "2025-12-20", 
-        returnDate: "2025-12-27" 
-    },
-    { 
-        flightNo: "5J 571", 
-        from: "Manila", 
-        to: "Cebu", 
-        depart: "06:00 AM", 
-        return: "04:00 PM", 
-        basePrice: 5800, 
-        seats: 30, 
-        hours: 1.5, 
-        fareType: "Regular", 
-        terminal: "Terminal A", 
-        departDate: "2025-12-21", 
-        returnDate: "2025-12-28" 
-    },
-    { 
-        flightNo: "PR 305", 
-        from: "Cebu", 
-        to: "Davao", 
-        depart: "01:30 PM", 
-        return: "08:30 PM", 
-        basePrice: 6800, 
-        seats: 25, 
-        hours: 2, 
-        fareType: "Promo Fare", 
-        terminal: "Terminal B", 
-        departDate: "2025-12-22", 
-        returnDate: "2025-12-29" 
-    }
+    { flightNo: "5J 561", from: "Manila", to: "Cebu", depart: "07:00 AM", return: "05:00 PM", basePrice: 6000, seats: 25, hours: 1.5, fareType: "Regular", terminal: "Terminal A", departDate: "2025-12-15", returnDate: "2025-12-22" },
+    { flightNo: "PR 300", from: "Cebu", to: "Davao", depart: "09:00 AM", return: "06:30 PM", basePrice: 7500, seats: 18, hours: 2, fareType: "Promo Fare", terminal: "Terminal B", departDate: "2025-12-16", returnDate: "2025-12-23" },
+    { flightNo: "Z2 104", from: "Manila", to: "Japan", depart: "11:00 AM", return: "07:00 PM", basePrice: 58000, seats: 12, hours: 4, fareType: "Regular", terminal: "Terminal A", departDate: "2025-12-17", returnDate: "2025-12-24" },
+    { flightNo: "5J 566", from: "Davao", to: "Singapore", depart: "08:30 AM", return: "04:30 PM", basePrice: 64000, seats: 20, hours: 3.5, fareType: "Promo Fare", terminal: "Terminal B", departDate: "2025-12-18", returnDate: "2025-12-25" },
+    { flightNo: "PR 301", from: "Cebu", to: "Boracay", depart: "10:15 AM", return: "06:15 PM", basePrice: 8800, seats: 15, hours: 1.75, fareType: "Regular", terminal: "Terminal A", departDate: "2025-12-19", returnDate: "2025-12-26" },
+    { flightNo: "Z2 109", from: "Manila", to: "Palawan", depart: "01:00 PM", return: "08:00 PM", basePrice: 10500, seats: 10, hours: 2.5, fareType: "Promo Fare", terminal: "Terminal B", departDate: "2025-12-20", returnDate: "2025-12-27" },
+    { flightNo: "5J 571", from: "Manila", to: "Cebu", depart: "06:00 AM", return: "04:00 PM", basePrice: 5800, seats: 30, hours: 1.5, fareType: "Regular", terminal: "Terminal A", departDate: "2025-12-21", returnDate: "2025-12-28" },
+    { flightNo: "PR 305", from: "Cebu", to: "Davao", depart: "01:30 PM", return: "08:30 PM", basePrice: 6800, seats: 25, hours: 2, fareType: "Promo Fare", terminal: "Terminal B", departDate: "2025-12-22", returnDate: "2025-12-29" }
 ];
 
 function generateFlights(type, departDate, returnDate, from, to) {
