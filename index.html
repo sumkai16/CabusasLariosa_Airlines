@@ -9,7 +9,13 @@
   <link rel="stylesheet" href="css/flight-results.css">
 </head>
 <body>
-  <img src="images/back.png" class="background-image">
+  <div class="background-slideshow">
+    <img src="images/back.png" class="background-image active">
+    <img src="images/background2.png" class="background-image">
+  </div>
+  <header>
+    <img src="images/logo.png" alt="MicaX Airlines Logo" class="logo">
+  </header>
   <section class="home">
     <h1>Welcome to MicaX Airlines ✈️</h1>
     <p id=tagline>"MicaX — Experience the Sky Differently."</p>
@@ -80,6 +86,17 @@
       </div>
     </div>
 
+    <script>
+      (function() {
+        const images = document.querySelectorAll('.background-slideshow .background-image');
+        let index = 0;
+        setInterval(() => {
+          images[index].classList.remove('active');
+          index = (index + 1) % images.length;
+          images[index].classList.add('active');
+        }, 5000);
+      })();
+    </script>
     <script src="js/utilities.js"></script>
     <script src="js/booking.js"></script>
     <script src="js/flight.js"></script>
