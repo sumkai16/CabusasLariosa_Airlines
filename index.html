@@ -14,7 +14,9 @@
     <img src="images/background2.png" class="background-image">
   </div>
   <header>
-    <img src="images/logo.png" alt="MicaX Airlines Logo" class="logo">
+    <div class="header-container">
+      <img src="images/logo.jpg" alt="MicaX Airlines Logo" class="logo">
+    </div>
   </header>
   <section class="home">
     <h1>Welcome to MicaX Airlines ✈️</h1>
@@ -89,6 +91,15 @@
       <span class="indicator" onclick="currentSlide(7)"></span>
     </div>
   </section>
+  
+  <section class="flight-routes">
+    <h2>Best Flight Deals from Airports Near You</h2>
+    <p class="routes-subtitle">Find unbeatable fares from major airports in the Philippines and make your dream trip a reality.</p>
+    <div class="routes-grid" id="routesContainer">
+      <!-- Route cards will be dynamically generated here -->
+    </div>
+  </section>
+  
     <div id="bookingModal" class="modal">
       <div class="modal-content">
         <span id="closeModal" class="close">&times;</span>
@@ -188,6 +199,75 @@
         slides[slideIndex - 1].classList.add('active');
         indicators[slideIndex - 1].classList.add('active');
       }
+
+      // Generate route cards dynamically from flight data
+      function generateRouteCards() {
+        const routes = getUniqueRoutes();
+        const container = document.getElementById('routesContainer');
+        
+        // Clear existing content
+        container.innerHTML = '';
+        
+        // Generate route cards
+        routes.forEach((route) => {
+          const routeCard = document.createElement('div');
+          routeCard.className = 'route-card';
+          routeCard.innerHTML = `
+            <div class="route-labels">
+              <span class="label cheapest">CHEAPEST</span>
+              <span class="label direct">DIRECT</span>
+            </div>
+            <div class="airline-name-top">MicaX Airlines</div>
+            <div class="route-content">
+              <div class="airline-info">
+                <div class="airline-icon">✈</div>
+                <div class="airline-details">
+                  <div class="departure-airport">${route.from} International</div>
+                  <div class="departure-date">Dec 2025</div>
+                </div>
+              </div>
+              <div class="flight-type">
+                <div class="nonstop">Nonstop</div>
+                <div class="trip-type">${route.isRoundTrip ? 'Round Trip ↔' : 'One Way →'}</div>
+              </div>
+              <div class="destination-info">
+                <div class="arrival-airport">${route.to} International</div>
+                <div class="arrival-date">Dec 2025</div>
+                <div class="price-info">
+                  <div class="price-label">From</div>
+                  <div class="price-value">₱${route.basePrice.toLocaleString()}</div>
+                </div>
+              </div>
+            </div>
+          `;
+          
+          // Add click event to book this route
+          routeCard.addEventListener('click', function() {
+            // Pre-fill the booking form with this route
+            document.getElementById('from').value = route.from;
+            document.getElementById('to').value = route.to;
+            
+            // Set flight type based on route
+            const flightTypeSelect = document.getElementById('flightType');
+            flightTypeSelect.value = route.isRoundTrip ? 'roundtrip' : 'oneway';
+            
+            // Trigger the toggle function to show/hide return date
+            toggleReturnDate();
+            
+            // Open booking modal
+            const bookingModal = document.getElementById('bookingModal');
+            bookingModal.classList.add('show');
+            bookingModal.classList.remove('hide');
+          });
+          
+          container.appendChild(routeCard);
+        });
+      }
+      
+      // Initialize route cards when page loads
+      document.addEventListener('DOMContentLoaded', function() {
+        generateRouteCards();
+      });
     </script>
     <script src="js/utilities.js"></script>
     <script src="js/booking.js"></script>
