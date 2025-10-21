@@ -22,6 +22,73 @@
     <p>Book your next flight with ease and comfort.</p>
     <button id="openBooking">Book A Flight</button>
   </section>
+  <section class="travel-destinations">
+    <h2>Popular Travel Destinations</h2>
+    <div class="destinations-slideshow">
+      <button class="slide-btn prev-btn" onclick="changeSlide(-1)">❮</button>
+      <div class="destinations-container">
+        <div class="destination-card active">
+          <img src="images/japan.jpg" alt="Japan" class="destination-image">
+          <div class="destination-overlay">
+            <h3>Japan</h3>
+            <p>Land of the Rising Sun</p>
+          </div>
+        </div>
+        <div class="destination-card">
+          <img src="images/singapore.jpg" alt="Singapore" class="destination-image">
+          <div class="destination-overlay">
+            <h3>Singapore</h3>
+            <p>Lion City</p>
+          </div>
+        </div>
+        <div class="destination-card">
+          <img src="images/manila.jpg" alt="Manila, Philippines" class="destination-image">
+          <div class="destination-overlay">
+            <h3>Manila</h3>
+            <p>Pearl of the Orient</p>
+          </div>
+        </div>
+        <div class="destination-card">
+          <img src="images/palawan.jpg" alt="Palawan, Philippines" class="destination-image">
+          <div class="destination-overlay">
+            <h3>Palawan</h3>
+            <p>Last Ecological Frontier</p>
+          </div>
+        </div>
+        <div class="destination-card">
+          <img src="images/boracay.jpg" alt="Boracay, Philippines" class="destination-image">
+          <div class="destination-overlay">
+            <h3>Boracay</h3>
+            <p>Paradise Island</p>
+          </div>
+        </div>
+        <div class="destination-card">
+          <img src="images/cebu.jpg" alt="Cebu, Philippines" class="destination-image">
+          <div class="destination-overlay">
+            <h3>Cebu</h3>
+            <p>Queen City of the South</p>
+          </div>
+        </div>
+        <div class="destination-card">
+          <img src="images/davao.jpg" alt="Davao, Philippines" class="destination-image">
+          <div class="destination-overlay">
+            <h3>Davao</h3>
+            <p>Durian Capital</p>
+          </div>
+        </div>
+      </div>
+      <button class="slide-btn next-btn" onclick="changeSlide(1)">❯</button>
+    </div>
+    <div class="slide-indicators">
+      <span class="indicator active" onclick="currentSlide(1)"></span>
+      <span class="indicator" onclick="currentSlide(2)"></span>
+      <span class="indicator" onclick="currentSlide(3)"></span>
+      <span class="indicator" onclick="currentSlide(4)"></span>
+      <span class="indicator" onclick="currentSlide(5)"></span>
+      <span class="indicator" onclick="currentSlide(6)"></span>
+      <span class="indicator" onclick="currentSlide(7)"></span>
+    </div>
+  </section>
     <div id="bookingModal" class="modal">
       <div class="modal-content">
         <span id="closeModal" class="close">&times;</span>
@@ -96,6 +163,31 @@
           images[index].classList.add('active');
         }, 5000);
       })();
+
+      let slideIndex = 1;
+      showSlide(slideIndex);
+
+      function changeSlide(n) {
+        showSlide(slideIndex += n);
+      }
+
+      function currentSlide(n) {
+        showSlide(slideIndex = n);
+      }
+
+      function showSlide(n) {
+        const slides = document.querySelectorAll('.destination-card');
+        const indicators = document.querySelectorAll('.indicator');
+        
+        if (n > slides.length) { slideIndex = 1; }
+        if (n < 1) { slideIndex = slides.length; }
+        
+        slides.forEach(slide => slide.classList.remove('active'));
+        indicators.forEach(indicator => indicator.classList.remove('active'));
+        
+        slides[slideIndex - 1].classList.add('active');
+        indicators[slideIndex - 1].classList.add('active');
+      }
     </script>
     <script src="js/utilities.js"></script>
     <script src="js/booking.js"></script>
