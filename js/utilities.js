@@ -86,6 +86,7 @@ function showSummaryModal(bookingData) {
                 ${flightInfo.return ? `<p><strong>Return:</strong> ${flightInfo.return}</p>` : ""}
                 <p><strong>Fare Type:</strong> ${flightInfo.fareType}</p>
                 <p><strong>Terminal:</strong> ${flightInfo.terminal}</p>
+                ${flightInfo.promoCode ? `<p><strong>Promo Code Applied:</strong> ${flightInfo.promoCode} (${flightInfo.discountApplied}% off)</p>` : ''}
                 <p><strong>Price per Passenger:</strong> ₱${pricePerPassenger.toLocaleString()}</p>
                 <p><strong>Number of Passengers:</strong> ${numberOfPassengers}</p>
                 <p><strong>Total Price:</strong> ₱${totalPrice.toLocaleString()}</p>

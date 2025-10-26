@@ -210,26 +210,118 @@ function displayFlights(type) {
       selectedFlight = flights.find(f => f.flightNo === flightNo);
       bookingData.flight = selectedFlight;
 
-      showAlertModal(`Selected flight ${flightNo}! Proceeding to passenger details.`, () => {
-        resultsModal.classList.add('hide');
-        setTimeout(() => resultsModal.remove(), 300);
+      if (selectedFlight.fareType === "Regular") {
+        showPromoCodeModal(() => {
+          resultsModal.classList.add('hide');
+          setTimeout(() => resultsModal.remove(), 300);
 
-        const passengerModal = document.getElementById('passengerModal');
-        initializePassengerSystem();
-        passengerModal.classList.add('show');
-      });
+          const passengerModal = document.getElementById('passengerModal');
+          initializePassengerSystem();
+          passengerModal.classList.add('show');
+        });
+      } else {
+        showAlertModal(`Selected flight ${flightNo}! Proceeding to passenger details.`, () => {
+          resultsModal.classList.add('hide');
+          setTimeout(() => resultsModal.remove(), 300);
+
+          const passengerModal = document.getElementById('passengerModal');
+          initializePassengerSystem();
+          passengerModal.classList.add('show');
+        });
+      }
     }
   });
 }
 
 function formatDate(dateString) {
   const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', { 
-    weekday: 'short', 
-    year: 'numeric', 
-    month: 'short', 
-    day: 'numeric' 
+  return date.toLocaleDateString('en-US', {
+    weekday: 'short',
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
   });
+}
+
+function showPromoCodeModal(callback) {
+  const existingPromoModal = document.getElementById('promoModal');
+  if (existingPromoModal) {
+    existingPromoModal.remove();
+  }
+
+  const promoModal = document.createElement('div');
+  promoModal.id = 'promoModal';
+  promoModal.className = 'modal promo-modal';
+  promoModal.innerHTML = `
+    <div class="modal-content promo-content">
+      <span class="close" id="closePromo">&times;</span>
+      <h2>Apply Promo Code</h2>
+      <p>Enter a promo code for your Regular fare flight to get a discount!</p>
+      <div class="promo-form">
+        <input type="text" id="promoCodeInput" placeholder="Enter promo code (e.g., SAVE10)" maxlength="10">
+        <button id="applyPromoBtn">Apply</button>
+        <button id="skipPromoBtn">Skip</button>
+      </div>
+      <div id="promoMessage" class="promo-message"></div>
+    </div>
+  `;
+  document.body.appendChild(promoModal);
+
+  const closePromoBtn = document.getElementById('closePromo');
+  closePromoBtn.addEventListener('click', () => {
+    promoModal.classList.add('hide');
+    setTimeout(() => promoModal.remove(), 300);
+  });
+
+  promoModal.addEventListener('click', (e) => {
+    if (e.target === promoModal) {
+      promoModal.classList.add('hide');
+      setTimeout(() => promoModal.remove(), 300);
+    }
+  });
+
+  const applyPromoBtn = document.getElementById('applyPromoBtn');
+  const skipPromoBtn = document.getElementById('skipPromoBtn');
+  const promoCodeInput = document.getElementById('promoCodeInput');
+  const promoMessage = document.getElementById('promoMessage');
+
+  applyPromoBtn.addEventListener('click', () => {
+    const code = promoCodeInput.value.trim().toUpperCase();
+    const validCodes = { 'SAVE10': 10, 'CHRISTMAS': 10, 'XMAS10': 10 };
+    const discount = validCodes[code];
+
+    if (discount) {
+      const originalPrice = bookingData.flight.price;
+      const discountedPrice = Math.round(originalPrice * (1 - discount / 100));
+      bookingData.flight.price = discountedPrice;
+      bookingData.flight.discountApplied = discount;
+      bookingData.flight.promoCode = code;
+
+      promoMessage.textContent = `Promo code applied! ${discount}% discount. New price: ₱${discountedPrice.toLocaleString()}`;
+      promoMessage.style.color = 'green';
+
+      setTimeout(() => {
+        promoModal.classList.add('hide');
+        setTimeout(() => {
+          promoModal.remove();
+          callback();
+        }, 300);
+      }, 1500);
+    } else {
+      promoMessage.textContent = 'Invalid promo code. Please try again.';
+      promoMessage.style.color = 'red';
+    }
+  });
+
+  skipPromoBtn.addEventListener('click', () => {
+    promoModal.classList.add('hide');
+    setTimeout(() => {
+      promoModal.remove();
+      callback();
+    }, 300);
+  });
+
+  promoModal.classList.add('show');
 }
 
 document.getElementById("bookingForm").addEventListener("submit", function(e) {
