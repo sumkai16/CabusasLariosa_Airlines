@@ -324,6 +324,69 @@ function showPromoCodeModal(callback) {
   promoModal.classList.add('show');
 }
 
+// Function to get unique routes from flight data
+function getUniqueRoutes() {
+  const allFlights = [...oneWayTemplates, ...roundTripTemplates];
+  const routeMap = new Map();
+  
+  allFlights.forEach(flight => {
+    const routeKey = `${flight.from}-${flight.to}`;
+    if (!routeMap.has(routeKey)) {
+      routeMap.set(routeKey, {
+        from: flight.from,
+        to: flight.to,
+        hours: flight.hours,
+        basePrice: flight.basePrice,
+        fareType: flight.fareType,
+        isRoundTrip: flight.return !== undefined
+      });
+    } else {
+      // Keep the lowest price for this route
+      const existing = routeMap.get(routeKey);
+      if (flight.basePrice < existing.basePrice) {
+        existing.basePrice = flight.basePrice;
+        existing.fareType = flight.fareType;
+        existing.isRoundTrip = flight.return !== undefined;
+      }
+    }
+  });
+  
+  return Array.from(routeMap.values());
+}
+
+// Function to get airport code for a city
+function getAirportCode(city) {
+  const airportCodes = {
+    'Manila': 'MNL',
+    'Cebu': 'CEB', 
+    'Davao': 'DVO',
+    'Japan': 'NRT',
+    'Singapore': 'SIN',
+    'Boracay': 'MPH',
+    'Palawan': 'PPS'
+  };
+  return airportCodes[city] || city.substring(0, 3).toUpperCase();
+}
+
+// Function to get route description
+function getRouteDescription(from, to) {
+  const descriptions = {
+    'Manila-Cebu': 'Quick domestic flight to the Queen City',
+    'Manila-Japan': 'International flight to the Land of the Rising Sun',
+    'Cebu-Davao': 'Connect to the Durian Capital',
+    'Davao-Singapore': 'International gateway to Southeast Asia',
+    'Cebu-Boracay': 'Paradise island getaway',
+    'Manila-Palawan': 'Last Ecological Frontier',
+    'Cebu-Manila': 'Return to the capital city',
+    'Davao-Cebu': 'Back to the Queen City',
+    'Japan-Manila': 'Return from the Land of the Rising Sun',
+    'Singapore-Davao': 'Return from Southeast Asia',
+    'Boracay-Cebu': 'Return from paradise',
+    'Palawan-Manila': 'Return from the ecological frontier'
+  };
+  return descriptions[`${from}-${to}`] || `Flight from ${from} to ${to}`;
+}
+
 document.getElementById("bookingForm").addEventListener("submit", function(e) {
   e.preventDefault();
   const type = document.getElementById("flightType").value;

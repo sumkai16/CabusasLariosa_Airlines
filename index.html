@@ -9,13 +9,97 @@
   <link rel="stylesheet" href="css/flight-results.css">
 </head>
 <body>
-  <img src="images/back.png" class="background-image">
+  <div class="background-slideshow">
+    <img src="images/back.png" class="background-image active">
+    <img src="images/background2.png" class="background-image">
+  </div>
+  <header>
+    <div class="header-container">
+      <img src="images/logo.jpg" alt="MicaX Airlines Logo" class="logo">
+    </div>
+  </header>
   <section class="home">
     <h1>Welcome to MicaX Airlines ✈️</h1>
     <p id=tagline>"MicaX — Experience the Sky Differently."</p>
     <p>Book your next flight with ease and comfort.</p>
     <button id="openBooking">Book A Flight</button>
   </section>
+  <section class="travel-destinations">
+    <h2>Popular Travel Destinations</h2>
+    <div class="destinations-slideshow">
+      <button class="slide-btn prev-btn" onclick="changeSlide(-1)">❮</button>
+      <div class="destinations-container">
+        <div class="destination-card active">
+          <img src="images/japan.jpg" alt="Japan" class="destination-image">
+          <div class="destination-overlay">
+            <h3>Japan</h3>
+            <p>Land of the Rising Sun</p>
+          </div>
+        </div>
+        <div class="destination-card">
+          <img src="images/singapore.jpg" alt="Singapore" class="destination-image">
+          <div class="destination-overlay">
+            <h3>Singapore</h3>
+            <p>Lion City</p>
+          </div>
+        </div>
+        <div class="destination-card">
+          <img src="images/manila.jpg" alt="Manila, Philippines" class="destination-image">
+          <div class="destination-overlay">
+            <h3>Manila</h3>
+            <p>Pearl of the Orient</p>
+          </div>
+        </div>
+        <div class="destination-card">
+          <img src="images/palawan.jpg" alt="Palawan, Philippines" class="destination-image">
+          <div class="destination-overlay">
+            <h3>Palawan</h3>
+            <p>Last Ecological Frontier</p>
+          </div>
+        </div>
+        <div class="destination-card">
+          <img src="images/boracay.jpg" alt="Boracay, Philippines" class="destination-image">
+          <div class="destination-overlay">
+            <h3>Boracay</h3>
+            <p>Paradise Island</p>
+          </div>
+        </div>
+        <div class="destination-card">
+          <img src="images/cebu.jpg" alt="Cebu, Philippines" class="destination-image">
+          <div class="destination-overlay">
+            <h3>Cebu</h3>
+            <p>Queen City of the South</p>
+          </div>
+        </div>
+        <div class="destination-card">
+          <img src="images/davao.jpg" alt="Davao, Philippines" class="destination-image">
+          <div class="destination-overlay">
+            <h3>Davao</h3>
+            <p>Durian Capital</p>
+          </div>
+        </div>
+      </div>
+      <button class="slide-btn next-btn" onclick="changeSlide(1)">❯</button>
+    </div>
+    <div class="slide-indicators">
+      <span class="indicator active" onclick="currentSlide(1)"></span>
+      <span class="indicator" onclick="currentSlide(2)"></span>
+      <span class="indicator" onclick="currentSlide(3)"></span>
+      <span class="indicator" onclick="currentSlide(4)"></span>
+      <span class="indicator" onclick="currentSlide(5)"></span>
+      <span class="indicator" onclick="currentSlide(6)"></span>
+      <span class="indicator" onclick="currentSlide(7)"></span>
+    </div>
+  </section>
+  
+  <section class="flight-routes">
+    <h2>Best Flight Deals from Airports Near You</h2>
+    <p class="routes-subtitle">Find unbeatable fares from major airports in the Philippines and make your dream trip a reality.</p>
+    <div class="routes-grid" id="routesContainer">
+      <!-- Route cards will be dynamically generated here -->
+    </div>
+  </section>
+  
     <div id="bookingModal" class="modal">
       <div class="modal-content">
         <span id="closeModal" class="close">&times;</span>
@@ -80,9 +164,157 @@
       </div>
     </div>
 
+    <script>
+      (function() {
+        const images = document.querySelectorAll('.background-slideshow .background-image');
+        let index = 0;
+        setInterval(() => {
+          images[index].classList.remove('active');
+          index = (index + 1) % images.length;
+          images[index].classList.add('active');
+        }, 5000);
+      })();
+
+      let slideIndex = 1;
+      showSlide(slideIndex);
+
+      function changeSlide(n) {
+        showSlide(slideIndex += n);
+      }
+
+      function currentSlide(n) {
+        showSlide(slideIndex = n);
+      }
+
+      function showSlide(n) {
+        const slides = document.querySelectorAll('.destination-card');
+        const indicators = document.querySelectorAll('.indicator');
+        
+        if (n > slides.length) { slideIndex = 1; }
+        if (n < 1) { slideIndex = slides.length; }
+        
+        slides.forEach(slide => slide.classList.remove('active'));
+        indicators.forEach(indicator => indicator.classList.remove('active'));
+        
+        slides[slideIndex - 1].classList.add('active');
+        indicators[slideIndex - 1].classList.add('active');
+      }
+
+      // Generate route cards dynamically from flight data
+      function generateRouteCards() {
+        const routes = getUniqueRoutes();
+        const container = document.getElementById('routesContainer');
+        
+        // Clear existing content
+        container.innerHTML = '';
+        
+        // Generate route cards
+        routes.forEach((route) => {
+          const routeCard = document.createElement('div');
+          routeCard.className = 'route-card';
+          routeCard.innerHTML = `
+            <div class="route-labels">
+              <span class="label cheapest">CHEAPEST</span>
+              <span class="label direct">DIRECT</span>
+            </div>
+            <div class="airline-name-top">MicaX Airlines</div>
+            <div class="route-content">
+              <div class="airline-info">
+                <div class="airline-icon">✈</div>
+                <div class="airline-details">
+                  <div class="departure-airport">${route.from} International</div>
+                  <div class="departure-date">Dec 2025</div>
+                </div>
+              </div>
+              <div class="flight-type">
+                <div class="nonstop">Nonstop</div>
+                <div class="trip-type">${route.isRoundTrip ? 'Round Trip ↔' : 'One Way →'}</div>
+              </div>
+              <div class="destination-info">
+                <div class="arrival-airport">${route.to} International</div>
+                <div class="arrival-date">Dec 2025</div>
+                <div class="price-info">
+                  <div class="price-label">From</div>
+                  <div class="price-value">₱${route.basePrice.toLocaleString()}</div>
+                </div>
+              </div>
+            </div>
+          `;
+          
+          // Add click event to book this route
+          routeCard.addEventListener('click', function() {
+            // Pre-fill the booking form with this route
+            document.getElementById('from').value = route.from;
+            document.getElementById('to').value = route.to;
+            
+            // Set flight type based on route
+            const flightTypeSelect = document.getElementById('flightType');
+            flightTypeSelect.value = route.isRoundTrip ? 'roundtrip' : 'oneway';
+            
+            // Trigger the toggle function to show/hide return date
+            toggleReturnDate();
+            
+            // Open booking modal
+            const bookingModal = document.getElementById('bookingModal');
+            bookingModal.classList.add('show');
+            bookingModal.classList.remove('hide');
+          });
+          
+          container.appendChild(routeCard);
+        });
+      }
+      
+      // Initialize route cards when page loads
+      document.addEventListener('DOMContentLoaded', function() {
+        generateRouteCards();
+      });
+    </script>
     <script src="js/utilities.js"></script>
     <script src="js/booking.js"></script>
     <script src="js/flight.js"></script>
     <script src="js/passenger.js"></script>
+    
+    <section class="about-section">
+        <div class="about-container">
+            <h2>Why Book with MicaX Airlines?</h2>
+            <div class="reasons-grid">
+                <div class="reason-item">
+                    <h3>✈️ Best Flight Deals</h3>
+                    <p>Get the cheapest fares to your favorite destinations with our competitive pricing and exclusive offers.</p>
+                </div>
+                <div class="reason-item">
+                    <h3>🌍 Wide Destination Network</h3>
+                    <p>Fly to popular destinations across the Philippines and international hubs like Japan and Singapore.</p>
+                </div>
+                <div class="reason-item">
+                    <h3>🛡️ Safe & Reliable</h3>
+                    <p>Travel with confidence on our modern fleet with experienced pilots and crew members.</p>
+                </div>
+                <div class="reason-item">
+                    <h3>💺 Comfortable Journey</h3>
+                    <p>Enjoy spacious seating, in-flight entertainment, and premium service throughout your flight.</p>
+                </div>
+                <div class="reason-item">
+                    <h3>📱 Easy Booking</h3>
+                    <p>Book your flights quickly and easily through our user-friendly online booking system.</p>
+                </div>
+                <div class="reason-item">
+                    <h3>🎯 Direct Flights</h3>
+                    <p>Save time with our nonstop flights to major destinations - no layovers, just convenience.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="contact-info">
+                <p>Contact: micaX@gmail.com</p>
+            </div>
+            <div class="copyright">
+                <p>micaX © 2025 All Rights Reserved</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
