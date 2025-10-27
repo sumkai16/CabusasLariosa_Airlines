@@ -5,6 +5,7 @@
   <title>MicaX Airlines</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
   <link rel="stylesheet" href="css/flight-results.css">
 </head>
@@ -15,16 +16,25 @@
   </div>
   <header>
     <div class="header-container">
-      <img src="images/logo.jpg" alt="MicaX Airlines Logo" class="logo">
+      <img src="images/logo.png" alt="MicaX Airlines Logo" class="logo">
+      <nav class="header-nav">
+        <ul>
+          <a href="#home"><li>Home</li></a>
+          <a href="#destinations"><li>Destinations</li></a>
+          <a href="#deals"><li>Flight Deals</li></a>
+          <a href="#about"><li>Why Us?</li></a>
+          <a href="#contact"><li>Contact</li></a>
+        </ul>
+      </nav>
     </div>
   </header>
-  <section class="home">
+  <section class="home" id="home">
     <h1>Welcome to MicaX Airlines ✈️</h1>
     <p id=tagline>"MicaX — Experience the Sky Differently."</p>
     <p>Book your next flight with ease and comfort.</p>
     <button id="openBooking">Book A Flight</button>
   </section>
-  <section class="travel-destinations">
+  <section class="travel-destinations" id="destinations">
     <h2>Popular Travel Destinations</h2>
     <div class="destinations-slideshow">
       <button class="slide-btn prev-btn" onclick="changeSlide(-1)">❮</button>
@@ -92,7 +102,7 @@
     </div>
   </section>
   
-  <section class="flight-routes">
+  <section class="flight-routes" id="deals">
     <h2>Best Flight Deals from Airports Near You</h2>
     <p class="routes-subtitle">Find unbeatable fares from major airports in the Philippines and make your dream trip a reality.</p>
     <div class="routes-grid" id="routesContainer">
@@ -274,7 +284,7 @@
     <script src="js/flight.js"></script>
     <script src="js/passenger.js"></script>
     
-    <section class="about-section">
+    <section class="about-section" id="about">
         <div class="about-container">
             <h2>Why Book with MicaX Airlines?</h2>
             <div class="reasons-grid">
@@ -306,7 +316,7 @@
         </div>
     </section>
     
-    <footer>
+    <footer id="contact">
         <div class="footer-content">
             <div class="contact-info">
                 <p>Contact: micaX@gmail.com</p>
